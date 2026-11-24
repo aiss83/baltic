@@ -1,0 +1,28 @@
+# Build trees
+/build/
+/build-*/
+/embedded/build/
+/embedded/build-*/
+/.deps/
+/install/
+
+# Local geoid data (large; fetch with scripts/fetch-egm2008.sh)
+/data/egm2008/*.tif
+/data/egm2008/*.gtx
+/data/egm2008/*.zip
+/data/egm2008/*.part
+
+# Editors / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
+compile_commands.json
+
+# Test artefacts
+*.o
+*.a
+*.dylib
+*.so
+*.dll
+/docs/doxygen/

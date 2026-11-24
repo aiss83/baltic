@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    name: Build and test (Ubuntu)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake pkg-config libtiff-dev libsqlite3-dev
+
+      - name: Cache EGM2008 grid
+        uses: actions/cache@v4
+        with:
+          path: data/egm2008/us_nga_egm08_25.tif
+          key: egm2008-891553e91f7a64502d2a6300abb78026c17cb32657c2b37da0780238f2258ed2
+
+      - name: Fetch EGM2008 grid
+        run: |
+          if [ ! -f data/egm2008/us_nga_egm08_25.tif ]; then
+            ./scripts/fetch-egm2008.sh
+          fi
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -j"$(nproc)"
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  cortex-m7:
+    name: Cross-build Cortex-M7
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Arm toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake gcc-arm-none-eabi binutils-arm-none-eabi
+
+      - name: Configure embedded library
+        run: |
+          cmake -S embedded -B build-m7 \
+            -DCMAKE_TOOLCHAIN_FILE=embedded/cmake/arm-none-eabi-gcc-cortex-m7.cmake \
+            -DBALTIC_EMBEDDED_BUILD_TESTS=OFF
+
+      - name: Build
+        run: cmake --build build-m7 -j"$(nproc)"
+
+      - name: Report size
+        run: arm-none-eabi-size build-m7/libbaltic_embedded.a

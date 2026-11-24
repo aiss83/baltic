@@ -1,0 +1,48 @@
+# Doxygen configuration for baltic.
+# Build: doxygen Doxyfile
+# Output: docs/doxygen/html/index.html
+
+PROJECT_NAME           = "baltic"
+PROJECT_NUMBER         = "0.1.0"
+PROJECT_BRIEF          = "EGM2008 ellipsoidal-to-Baltic height conversion, host and embedded"
+OUTPUT_DIRECTORY       = docs/doxygen
+OUTPUT_LANGUAGE        = English
+INPUT_ENCODING         = UTF-8
+
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+HIDE_UNDOC_MEMBERS     = NO
+CASE_SENSE_NAMES       = YES
+
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+
+INPUT                  = include/baltic/baltic.h \
+                         embedded/include/baltic_embedded.h \
+                         docs
+FILE_PATTERNS          = *.h *.md
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = docs/INDEX.md
+
+EXCLUDE                = third_party \
+                         data \
+                         build \
+                         build-* \
+                         docs/doxygen \
+                         embedded/grids
+EXCLUDE_PATTERNS       = */build/* */build-*/* */docs/doxygen/*
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+GENERATE_TREEVIEW      = YES
+SEARCHENGINE           = YES
+HAVE_DOT               = NO
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+REFERENCED_BY_RELATION = NO
+REFERENCES_RELATION    = NO

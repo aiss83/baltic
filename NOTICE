@@ -1,0 +1,23 @@
+Third-party components
+======================
+
+PROJ (https://proj.org/)
+------------------------
+This repository contains an unmodified source copy of PROJ 9.8.1 in
+third_party/proj/.  PROJ is distributed under the MIT/X11 licence; see
+third_party/proj/COPYING for the full text.
+
+The baltic library links against PROJ and uses its `vgridshift` operation,
+grid handling (GeoTIFF/GTX) and interpolation code.  Vertical grid data
+(EGM2008) is not part of this repository; see data/README.md for sources and
+terms of use.
+
+EGM2008
+-------
+The EGM2008 Earth Gravitational Model was developed by the U.S. National
+Geospatial-Intelligence Agency (NGA).  Grid files are redistributed by
+several mirrors; consult data/README.md before downloading.
+
+The compact C arrays in embedded/grids/ are derived from the EGM2008 grid
+by the egm2008_to_c generator and are subject to the same terms as the
+source model.

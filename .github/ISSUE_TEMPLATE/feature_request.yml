@@ -1,0 +1,25 @@
+name: Feature request
+description: Предложить улучшение
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Задача
+      description: Какую проблему нужно решить?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Предлагаемое решение
+  - type: dropdown
+    id: area
+    attributes:
+      label: Область
+      options:
+        - libbaltic / API
+        - CLI
+        - baltic_embedded
+        - Cortex-M port
+        - docs / CI

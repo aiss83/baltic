@@ -1,0 +1,11 @@
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+
+Name: baltic
+Description: Ellipsoidal to Baltic height conversion with EGM2008 and PROJ
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -lbaltic
+Libs.private: -lm
+Cflags: -I${includedir}

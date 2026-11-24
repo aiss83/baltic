@@ -1,0 +1,44 @@
+name: Bug report
+description: Сообщить об ошибке в baltic / baltic_embedded
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за отчёт. Не прикладывайте токены и закрытые данные.
+  - type: input
+    id: version
+    attributes:
+      label: Версия
+      description: Вывод `baltic version` или версия коммита
+    validations:
+      required: true
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Компонент
+      options:
+        - libbaltic (host)
+        - baltic CLI
+        - baltic_embedded
+        - STM32H743 / Cortex-M7 port
+        - docs / build
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: Что произошло
+      description: Ожидаемое и фактическое поведение
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Как воспроизвести
+      description: Команды, входные координаты, фрагмент лога
+  - type: textarea
+    id: environment
+    attributes:
+      label: Окружение
+      description: ОС, компилятор, CMake, PROJ, MCU/тулчейн
