@@ -46,26 +46,34 @@ jobs:
         run: ctest --test-dir build --output-on-failure
 
   cortex-m7:
-    name: Cross-build Cortex-M7
+    name: Cross-compile Cortex-M7
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Arm toolchain
+      - name: Install clang
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake gcc-arm-none-eabi binutils-arm-none-eabi
+          sudo apt-get install -y --no-install-recommends clang llvm
 
-      - name: Configure embedded library
+      - name: Compile library for Cortex-M7
         run: |
-          cmake -S embedded -B build-m7 \
-            -DCMAKE_TOOLCHAIN_FILE=embedded/cmake/arm-none-eabi-gcc-cortex-m7.cmake \
-            -DBALTIC_EMBEDDED_BUILD_TESTS=OFF
+          clang --target=arm-none-eabi -mcpu=cortex-m7 -mthumb \
+            -mfpu=fpv5-d16 -mfloat-abi=hard -O2 \
+            -ffunction-sections -fdata-sections -ffreestanding \
+            -Iembedded/include \
+            -c embedded/src/baltic_embedded.c -o /tmp/baltic_embedded_m7.o
+          size /tmp/baltic_embedded_m7.o
+          llvm-nm -u /tmp/baltic_embedded_m7.o
 
-      - name: Build
-        run: cmake --build build-m7 -j"$(nproc)"
-
-      - name: Report size
-        run: arm-none-eabi-size build-m7/libbaltic_embedded.a
+      - name: Compile grid and check .baltic_grid section
+        run: |
+          clang --target=arm-none-eabi -mcpu=cortex-m7 -mthumb \
+            -mfpu=fpv5-d16 -mfloat-abi=hard -O2 -ffreestanding \
+            -Iembedded/include \
+            -c embedded/grids/egm2008_moscow_2deg.c -o /tmp/grid_m7.o
+          size /tmp/grid_m7.o
+          readelf -S /tmp/grid_m7.o | grep -q '\.baltic_grid'
+          echo "grid section .baltic_grid present"
