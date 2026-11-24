@@ -1,7 +1,8 @@
 # Данные EGM2008
 
 В репозитории нет файлов геоида: глобальная сетка EGM2008 2.5′ занимает
-около 77 МиБ. Она скачивается скриптом и не коммитится (см. `.gitignore`).
+около 77 МиБ (80.6 МБ). Она скачивается скриптом и не коммитится
+(см. `.gitignore`).
 
 ## Рекомендуемая сетка
 
@@ -9,11 +10,11 @@
 |---|---|
 | Файл | `us_nga_egm08_25.tif` |
 | Формат | GeoTIFF (PROJ grid), deflate |
-| Размер | 80 671 172 байт |
-| SHA-256 | `891553e91f7a64502d2a6300abb78026c17cb32657c2b37da0780238f2258ed2` |
+| Размер | 80 585 622 байт |
+| SHA-256 | `4191d471eefebf24091b56dbc604353cb3b8cf8cc70e448bb9ae56a272bef17a` |
 | Разрешение | 2.5′ (0.041666667°) |
-| Размерность | 8641 × 4321 |
-| Покрытие | 90°S … 90°N, 180°W … 180°E |
+| Размерность | 8640 × 4321 |
+| Покрытие | 90°S … 90°N, 180°W … 179.958333°E (долгота замыкается) |
 | Единицы | метры (высота геоида) |
 | Горизонтальная система | WGS 84 |
 
@@ -27,16 +28,20 @@
 `data/egm2008/us_nga_egm08_25.tif`. Можно указать другой путь/URL:
 
 ```sh
-BALTIC_EGM2008_URL=https://cdn.proj.org/us_nga_egm08_25.tif \
+BALTIC_EGM2008_URL=https://raw.githubusercontent.com/OSGeo/PROJ-data/master/us_nga/us_nga_egm08_25.tif \
     ./scripts/fetch-egm2008.sh /path/to/us_nga_egm08_25.tif
 ```
 
 ## Источники
 
-- Зеркало Agisoft (используется скриптом):
-  <https://download.agisoft.com/gtg/us_nga_egm08_25.tif>
+- Официальный репозиторий PROJ-data (используется скриптом):
+  <https://github.com/OSGeo/PROJ-data/blob/master/us_nga/us_nga_egm08_25.tif>
 - Официальный CDN PROJ: <https://cdn.proj.org/us_nga_egm08_25.tif>
   (в некоторых сетях недоступен; файл входит в пакет `proj-data`)
+- Зеркало Agisoft:
+  <https://download.agisoft.com/gtg/us_nga_egm08_25.tif>
+  (файл 8641 × 4321, другой размер и SHA-256; при его использовании
+  задайте `BALTIC_SKIP_SHA256=1` или свой `BALTIC_EGM2008_SHA256`)
 - Каталог EGM2008 NGA: <https://earth-info.nga.mil/>
 - Описание модели EGM2008: <https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm2008/>
 
@@ -59,7 +64,7 @@ shasum -a 256 data/egm2008/us_nga_egm08_25.tif
 ./build/baltic info --grid data/egm2008/us_nga_egm08_25.tif
 ```
 
-Ожидаемые `width=8641`, `height=4321`, `dlon_deg=0.041666667`.
+Ожидаемые `width=8640`, `height=4321`, `dlon_deg=0.041666667`.
 
 ## Условия использования
 

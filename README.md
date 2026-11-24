@@ -103,8 +103,8 @@ MacPorts), добавьте `-DCMAKE_PREFIX_PATH=/opt/local`.
 ./scripts/fetch-egm2008.sh
 ```
 
-Скрипт кладёт `data/egm2008/us_nga_egm08_25.tif` (80 671 172 байт,
-SHA-256 `891553e91f7a64502d2a6300abb78026c17cb32657c2b37da0780238f2258ed2`).
+Скрипт кладёт `data/egm2008/us_nga_egm08_25.tif` (80 585 622 байт,
+SHA-256 `4191d471eefebf24091b56dbc604353cb3b8cf8cc70e448bb9ae56a272bef17a`).
 Подробности и альтернативные источники — в [data/README.md](data/README.md).
 
 ### CLI
@@ -115,9 +115,9 @@ path=/.../data/egm2008/us_nga_egm08_25.tif
 format=gtiff
 west_deg=-180.000000000
 south_deg=-90.000000000
-east_deg=180.000000000
+east_deg=179.958333333
 north_deg=90.000000000
-width=8641
+width=8640
 height=4321
 dlon_deg=0.041666667
 dlat_deg=0.041666667

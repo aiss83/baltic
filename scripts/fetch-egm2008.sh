@@ -8,7 +8,7 @@
 # Environment:
 #   BALTIC_EGM2008_URL     alternative download URL
 #   BALTIC_EGM2008_SHA256  expected SHA-256 (default: checksum of the
-#                          80,671,172-byte Agisoft/PROJ grid)
+#                          official 80,585,622-byte PROJ-data grid)
 #   BALTIC_SKIP_SHA256=1   skip checksum verification (not recommended)
 #
 # Copyright (c) 2026 Baltic contributors
@@ -18,8 +18,8 @@ set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 DEST=${1:-"$ROOT/data/egm2008/us_nga_egm08_25.tif"}
-URL=${BALTIC_EGM2008_URL:-"https://download.agisoft.com/gtg/us_nga_egm08_25.tif"}
-EXPECTED=${BALTIC_EGM2008_SHA256:-"891553e91f7a64502d2a6300abb78026c17cb32657c2b37da0780238f2258ed2"}
+URL=${BALTIC_EGM2008_URL:-"https://raw.githubusercontent.com/OSGeo/PROJ-data/master/us_nga/us_nga_egm08_25.tif"}
+EXPECTED=${BALTIC_EGM2008_SHA256:-"4191d471eefebf24091b56dbc604353cb3b8cf8cc70e448bb9ae56a272bef17a"}
 
 sha256_file() {
     if command -v sha256sum >/dev/null 2>&1; then
